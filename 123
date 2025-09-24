@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Магазин бытовой техники "Офелия"</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        :root {
+            --green: #2E8B57;
+            --white: #FFFFFF;
+            --red: #DC143C;
+        }
+
+        body {
+            background-color: #f5f5f5;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--green), #1e6b3a);
+            color: var(--white);
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo::before {
+            content: "⚡";
+            margin-right: 10px;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--red);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(46, 139, 87, 0.9), rgba(46, 139, 87, 0.7)), 
+                        url('https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?ixlib=rb-4.0.3');
+            background-size: cover;
+            background-position: center;
+            color: var(--white);
+            text-align: center;
+            padding: 4rem 1rem;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+
+        .cta-button {
+            background-color: var(--red);
+            color: var(--white);
+            padding: 12px 30px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .cta-button:hover {
+            background-color: #b3001e;
+        }
+
+        /* Products Section */
+        .products {
+            max-width: 1200px;
+            margin: 3rem auto;
+            padding: 0 20px;
+        }
+
+        .section-title {
+            text-align: center;
+            color: var(--green);
+            margin-bottom: 2rem;
+            font-size: 2.5rem;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .product-card {
+            background: var(--white);
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            border: 2px solid var(--green);
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+        }
+
+        .product-title {
+            color: var(--green);
+            margin-bottom: 0.5rem;
+        }
+
+        .product-price {
+            color: var(--red);
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .buy-button {
+            background-color: var(--green);
+            color: var(--white);
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.3s;
+        }
+
+        .buy-button:hover {
+            background-color: #1e6b3a;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--green);
+            color: var(--white);
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            padding: 0 20px;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            color: var(--red);
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section a {
+            color: var(--white);
+            text-decoration: none;
+        }
+
+        .footer-section a:hover {
+            color: var(--red);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            nav ul {
+                flex-direction: column;
+                text-align: center;
+                gap: 1rem;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="logo">ОФЕЛИЯ</div>
+            <nav>
+                <ul>
+                    <li><a href="#home">Главная</a></li>
+                    <li><a href="#products">Техника</a></li>
+                    <li><a href="#about">О нас</a></li>
+                    <li><a href="#contact">Контакты</a></li> // cюда и карта//
+                    <li><a href="#dostavka">Доставка</a></li>
+                    <li><a href="#servise">Сервис</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero" id="home">
+        <h1>Магазин бытовой техники "Офелия"</h1>
+        <p>Лучшая техника для вашего дома по доступным ценам</p>
+        <button class="cta-button">Перейти к покупкам</button>
+    </section>
+
+    <section class="products" id="products">
+        <h2 class="section-title">Популярные товары</h2>
+        <div class="product-grid">
+            <div class="product-card">
+                <img src="https://resizer.mail.ru/p/20e1ec76-8a25-5142-bcf5-aacc21daa4fe/AQAKEO9tdAjWW34jZ1mh9kEodQImMc02QJzC4MmVPIHRB2AgC3A18T3Ku1BxB83lv8wa8MvIpK9MoFmFI68-seLACEU.png" alt="Холодильник" class="product-image">
+                <h3 class="product-title">Холодильник Samsung</h3>
+                <p class="product-price">45 990 ₽</p>
+                <button class="buy-button">Купить</button>
+            </div>
+
+            <div class="product-card">
+                <img src="https://bosch-centre.ru/upload/resize_cache/iblock/8c8/uxtdtwunh7u9tljyrgi4ph3rjxwpe0gc/553_440_1/stiralnaya_mashina_bosch_wga24400me_foto_4.jpg" alt="Стиральная машина" class="product-image">
+                <h3 class="product-title">Стиральная машина LG</h3>
+                <p class="product-price">32 490 ₽</p>
+                <button class="buy-button">Купить</button>
+            </div>
+
+            <div class="product-card">
+                <img src="https://mi-shop.com/upload/iblock/b38/8psle1148y5vrwa2d402one6msbh84kt.png" alt="Телевизор" class="product-image">
+                <h3 class="product-title">Телевизор Sony 4K</h3>
+                <p class="product-price">67 990 ₽</p>
+                <button class="buy-button">Купить</button>
+            </div>
+
+            <div class="product-card">
+                <img src="https://ir-3.ozone.ru/s3/multimedia-x/c1000/6144407445.jpg" alt="Микроволновая печь" class="product-image">
+                <h3 class="product-title">Микроволновая печь</h3>
+                <p class="product-price">8 990 ₽</p>
+                <button class="buy-button">Купить</button>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3>Контакты</h3>
+                <p>📞 +7 (495) 123-45-67</p>
+                <p>📧 info@ofelia.ru</p>
+                <p>📍 Москва, ул. Примерная, 123</p>
+            </div>
+
+            <div class="footer-section">
+                <h3>Категории</h3>
+                <ul>
+                    <li><a href="#">Холодильники</a></li>
+                    <li><a href="#">Стиральные машины</a></li>
+                    <li><a href="#">Телевизоры</a></li>
+                    <li><a href="#">Кухонная техника</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h3>Информация</h3>
+                <ul>
+                    <li><a href="#">Доставка и оплата</a></li>
+                    <li><a href="#">Гарантия</a></li>
+                    <li><a href="#">О компании</a></li>
+                    <li><a href="#">Контакты</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Простая логика для кнопок
+        document.querySelectorAll('.buy-button, .cta-button').forEach(button => {
+            button.addEventListener('click', function() {
+                alert('Товар добавлен в корзину!');
+            });
+        });
+    </script>
+
+<script>
+    // Простая логика для кнопок
+    document.querySelectorAll('.vcatalog, .cta-button').forEach(button => {
+        button.addEventListener('click', function() {
+            alert('Товар добавлен в корзину!');
+        });
+    });
+</script>
+</body>
+</html>
