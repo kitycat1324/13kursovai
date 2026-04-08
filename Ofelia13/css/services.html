@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Услуги - Магазин "Офелия"</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Шапка сайта -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="index.html" class="logo">ОФЕ<span>ЛИЯ</span></a>
+                <nav>
+                    <ul>
+                        <li><a href="index.html"><i class="fas fa-home"></i> Главная</a></li>
+                        <li><a href="catalog.html"><i class="fas fa-th-list"></i> Каталог</a></li>
+                        <li><a href="services.html"><i class="fas fa-tools"></i> Услуги</a></li>
+                        <li><a href="cart.html" class="cart-icon">
+                            <i class="fas fa-shopping-cart"></i> Корзина <span class="cart-count" id="cartCount">0</span>
+                        </a></li>
+                        <li><a href="profile.html" class="user-icon">
+                            <i class="fas fa-user"></i> Профиль
+                        </a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Основной контент -->
+    <main class="container">
+        <h1 class="page-title">Наши услуги</h1>
+        
+        <div class="services-grid">
+            <div class="service-card">
+                <div class="service-image">
+                    <img src="/images/remont.jpg" alt="Ремонт техники">
+                </div>
+                <div class="service-info">
+                    <h3 class="service-title">Ремонт бытовой техники</h3>
+                    <p class="service-description">Профессиональный ремонт холодильников, стиральных машин, плит и другой техники любой сложности. Гарантия на все виды работ.</p>
+                    <ul class="product-features">
+                        <li>Диагностика бесплатно</li>
+                        <li>Оригинальные запчасти</li>
+                        <li>Гарантия до 2 лет</li>
+                        <li>Выезд мастера в день обращения</li>
+                    </ul>
+                    <button class="btn" onclick="orderService('Ремонт бытовой техники')">Заказать услугу</button>
+                </div>
+            </div>
+            
+            <div class="service-card">
+                <div class="service-image">
+                    <img src="/images/tehobsluga.gif" alt="Техническое обслуживание">
+                </div>
+                <div class="service-info">
+                    <h3 class="service-title">Техническое обслуживание</h3>
+                    <p class="service-description">Регулярное обслуживание вашей техники для продления срока службы и предотвращения поломок. Чистка, смазка, настройка.</p>
+                    <ul class="product-features">
+                        <li>Профилактика поломок</li>
+                        <li>Чистка и дезинфекция</li>
+                        <li>Настройка оптимальных режимов</li>
+                        <li>Консультация по эксплуатации</li>
+                    </ul>
+                    <button class="btn" onclick="orderService('Техническое обслуживание')">Заказать услугу</button>
+                </div>
+            </div>
+            
+            <div class="service-card">
+                <div class="service-image">
+                    <img src="/images/ustanovkateh.gif" alt="Установка техники">
+                </div>
+                <div class="service-info">
+                    <h3 class="service-title">Установка и подключение</h3>
+                    <p class="service-description">Профессиональная установка и подключение бытовой техники с гарантией качества работ. Правильный монтаж - залог долгой службы.</p>
+                    <ul class="product-features">
+                        <li>Установка любой сложности</li>
+                        <li>Подключение к коммуникациям</li>
+                        <li>Проверка работоспособности</li>
+                        <li>Инструктаж по эксплуатации</li>
+                    </ul>
+                    <button class="btn" onclick="orderService('Установка и подключение')">Заказать услугу</button>
+                </div>
+            </div>
+            
+            <div class="service-card">
+                <div class="service-image">
+                    <img src="/images/konsul.webp" alt="Консультация">
+                </div>
+                <div class="service-info">
+                    <h3 class="service-title">Консультация специалиста</h3>
+                    <p class="service-description">Помощь в выборе техники, консультации по эксплуатации и решению проблем. Опытные специалисты ответят на все вопросы.</p>
+                    <ul class="product-features">
+                        <li>Подбор техники по параметрам</li>
+                        <li>Сравнение моделей</li>
+                        <li>Решение проблем эксплуатации</li>
+                        <li>Рекомендации по уходу</li>
+                    </ul>
+                    <button class="btn" onclick="orderService('Консультация специалиста')">Заказать услугу</button>
+                </div>
+            </div>
+
+            <div class="service-card">
+                <div class="service-image">
+                    <img src="/images/gara.gif" alt="Гарантийное обслуживание">
+                </div>
+                <div class="service-info">
+                    <h3 class="service-title">Гарантийное обслуживание</h3>
+                    <p class="service-description">Обслуживание техники в течение гарантийного срока.</p>
+                    <ul class="product-features">
+                        <li>Бесплатный ремонт по гарантии</li>
+                        <li>Замена неисправных деталей</li>
+                        <li>Оформление документов</li>
+                        <li>Соблюдение сроков ремонта</li>
+                    </ul>
+                    <button class="btn" onclick="orderService('Гарантийное обслуживание')">Заказать услугу</button>
+                </div>
+            </div>
+
+            <div class="service-card">
+                <div class="service-image">
+                    <img src="/images/vivoz.gif" alt="Вывоз старой техники">
+                </div>
+                <div class="service-info">
+                    <h3 class="service-title">Вывоз и утилизация</h3>
+                    <p class="service-description">Экологически безопасная утилизация старой техники. Правильная утилизация - забота об окружающей среде.</p>
+                    <ul class="product-features">
+                        <li>Бесплатный вывоз техники</li>
+                        <li>Экологичная утилизация</li>
+                        <li>Оформление документов</li>
+                        <li>Скидка на новую технику</li>
+                    </ul>
+                    <button class="btn" onclick="orderService('Вывоз и утилизация')">Заказать услугу</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Подвал -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>О магазине</h3>
+                    <ul>
+                        <li><a href="#">О компании</a></li>
+                        <li><a href="#">Наши магазины</a></li>
+                        <li><a href="#">Вакансии</a></li>
+                        <li><a href="#">Отзывы</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Помощь покупателю</h3>
+                    <ul>
+                        <li><a href="#">Доставка и оплата</a></li>
+                        <li><a href="#">Гарантия</a></li>
+                        <li><a href="#">Сервисные центры</a></li>
+                        <li><a href="#">Возврат товара</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Контакты</h3>
+                    <ul>
+                        <li>Телефон: 8 (800) 555-35-35</li>
+                        <li>Email: info@ofelia.ru</li>
+                        <li>Адрес: Москва, ул. Примерная, д. 10</li>
+                        <li>Режим работы: 9:00-21:00</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                &copy; 2025 Магазин бытовой техники "Офелия". Все права защищены.
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            updateCartCount();
+        });
+
+        function orderService(serviceName) {
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+            
+            if (!currentUser) {
+                alert('Для заказа услуги необходимо войти в систему!');
+                window.location.href = 'profile.html';
+                return;
+            }
+
+            alert(`Услуга "${serviceName}" заказана! Наш менеджер свяжется с вами в ближайшее время.`);
+            
+            // Здесь можно добавить логику отправки заявки на услугу
+            const serviceRequest = {
+                service: serviceName,
+                user: currentUser.email,
+                date: new Date().toISOString(),
+                status: 'новая'
+            };
+            
+            // Сохранить заявку в localStorage
+            let serviceRequests = JSON.parse(localStorage.getItem('serviceRequests')) || [];
+            serviceRequests.push(serviceRequest);
+            localStorage.setItem('serviceRequests', JSON.stringify(serviceRequests));
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Корзина - Магазин "Офелия"</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Шапка сайта -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="index.html" class="logo">ОФЕ<span>ЛИЯ</span></a>
+                <nav>
+                    <ul>
+                        <li><a href="index.html"><i class="fas fa-home"></i> Главная</a></li>
+                        <li><a href="catalog.html"><i class="fas fa-th-list"></i> Каталог</a></li>
+                        <li><a href="services.html"><i class="fas fa-tools"></i> Услуги</a></li>
+                        <li><a href="cart.html" class="cart-icon">
+                            <i class="fas fa-shopping-cart"></i> Корзина <span class="cart-count" id="cartCount">0</span>
+                        </a></li>
+                        <li><a href="profile.html" class="user-icon">
+                            <i class="fas fa-user"></i> Профиль
+                        </a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Основной контент -->
+    <main class="container">
+        <h1 class="page-title">Корзина</h1>
+        
+        <div class="section">
+            <div id="cart-items" class="cart-items">
+                <!-- Товары в корзине будут добавляться через JS -->
+                <p id="empty-cart-message">Ваша корзина пуста</p>
+            </div>
+            
+            <div class="cart-summary">
+                <div class="cart-total">
+                    <span>Итого:</span>
+                    <span id="cart-total">0 ₽</span>
+                </div>
+                <button class="btn btn-block" onclick="checkout()">Оформить заказ</button>
+            </div>
+        </div>
+    </main>
+    
+    <section class="hero-section">
+        <div class="hero-content">
+            <div class="hero-text">
+            </div>
+ 
+                 
+                <div class="hero-animation">
+                 
+                <img src="/images/kotic.gif" alt="Умный дом" loading="lazy">
+                </div>
+            
+        
+        </div>
+    </section>
+
+    <!-- Подвал -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>О магазине</h3>
+                    <ul>
+                        <li><a href="#">О компании</a></li>
+                        <li><a href="#">Наши магазины</a></li>
+                        <li><a href="#">Вакансии</a></li>
+                        <li><a href="#">Отзывы</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Помощь покупателю</h3>
+                    <ul>
+                        <li><a href="#">Доставка и оплата</a></li>
+                        <li><a href="#">Гарантия</a></li>
+                        <li><a href="#">Сервисные центры</a></li>
+                        <li><a href="#">Возврат товара</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Контакты</h3>
+                    <ul>
+                        <li>Телефон: 8 (800) 555-35-35</li>
+                        <li>Email: info@ofelia.ru</li>
+                        <li>Адрес: Москва, ул. Примерная, д. 10</li>
+                        <li>Режим работы: 9:00-21:00</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                &copy; 2025 Магазин бытовой техники "Офелия". Все права защищены.
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            updateCartCount();
+            updateCartDisplay();
+        });
+
+        function updateCartDisplay() {
+            const cartItemsContainer = document.getElementById('cart-items');
+            const emptyCartMessage = document.getElementById('empty-cart-message');
+            const cartTotal = document.getElementById('cart-total');
+            
+            // Очистить контейнер
+            cartItemsContainer.innerHTML = '';
+            
+            if (cart.length === 0) {
+                // Показать сообщение о пустой корзине
+                emptyCartMessage.style.display = 'block';
+                cartTotal.textContent = '0 ₽';
+                return;
+            }
+            
+            // Скрыть сообщение о пустой корзине
+            emptyCartMessage.style.display = 'none';
+            
+            // Добавить товары в корзину
+            let total = 0;
+            
+            cart.forEach(item => {
+                const itemTotal = item.price * item.quantity;
+                total += itemTotal;
+                
+                const cartItemElement = document.createElement('div');
+                cartItemElement.className = 'cart-item';
+                cartItemElement.innerHTML = `
+                    <div class="cart-item-image">
+                        <img src="${item.image}" alt="${item.name}">
+                    </div>
+                    <div class="cart-item-details">
+                        <h3 class="cart-item-title">${item.name}</h3>
+                        <div class="cart-item-price">${item.price.toLocaleString()} ₽ x ${item.quantity} = ${itemTotal.toLocaleString()} ₽</div>
+                    </div>
+                    <button class="cart-item-remove" onclick="removeFromCart(${item.id})">✕</button>
+                `;
+                
+                cartItemsContainer.appendChild(cartItemElement);
+            });
+            
+            // Обновить общую сумму
+            cartTotal.textContent = `${total.toLocaleString()} ₽`;
+        }
+
+        function removeFromCart(productId) {
+            cart = cart.filter(item => item.id !== productId);
+            updateCartCount();
+            updateCartDisplay();
+            
+            // Сохранить корзину в localStorage
+            localStorage.setItem('cart', JSON.stringify(cart));
+        }
+
+        function checkout() {
+            if (cart.length === 0) {
+                alert('Ваша корзина пуста!');
+                return;
+            }
+
+            // Проверка авторизации
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+            if (!currentUser) {
+                alert('Для оформления заказа необходимо войти в систему!');
+                window.location.href = 'profile.html';
+                return;
+            }
+
+            // Здесь можно добавить логику оформления заказа
+            alert('Заказ успешно оформлен! Спасибо за покупку!');
+            
+            // Очистить корзину
+            cart = [];
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCartCount();
+            updateCartDisplay();
+            
+            // Перенаправить на главную страницу
+            window.location.href = 'index.html';
+        }
+    </script>
+</body>
+</html>

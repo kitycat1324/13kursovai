@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Товар - Магазин "Офелия"</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Шапка сайта -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="index.html" class="logo">ОФЕ<span>ЛИЯ</span></a>
+                <nav>
+                    <ul>
+                        <li><a href="index.html"><i class="fas fa-home"></i> Главная</a></li>
+                        <li><a href="catalog.html"><i class="fas fa-th-list"></i> Каталог</a></li>
+                        <li><a href="services.html"><i class="fas fa-tools"></i> Услуги</a></li>
+                        <li><a href="cart.html" class="cart-icon">
+                            <i class="fas fa-shopping-cart"></i> Корзина <span class="cart-count" id="cartCount">0</span>
+                        </a></li>
+                        <li><a href="profile.html" class="user-icon">
+                            <i class="fas fa-user"></i> Профиль
+                        </a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Основной контент -->
+    <main class="container">
+        <div id="product-detail-container">
+            <script></script>
+        </div>
+    </main>
+
+    <!-- Подвал -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>О магазине</h3>
+                    <ul>
+                        <li><a href="#">О компании</a></li>
+                        <li><a href="#">Наши магазины</a></li>
+                        <li><a href="#">Вакансии</a></li>
+                        <li><a href="#">Отзывы</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Помощь покупателю</h3>
+                    <ul>
+                        <li><a href="#">Доставка и оплата</a></li>
+                        <li><a href="#">Гарантия</a></li>
+                        <li><a href="#">Сервисные центры</a></li>
+                        <li><a href="#">Возврат товара</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Контакты</h3>
+                    <ul>
+                        <li>Телефон: 8 (800) 555-35-35</li>
+                        <li>Email: info@ofelia.ru</li>
+                        <li>Адрес: Москва, ул. Примерная, д. 10</li>
+                        <li>Режим работы: 9:00-21:00</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                &copy; 2025 Магазин бытовой техники "Офелия". Все права защищены.
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/products.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        let currentImageIndex = 0;
+        let currentProduct = null;
+
+        document.addEventListener('DOMContentLoaded', function() {
+            updateCartCount();
+            loadProductDetail();
+        });
+
+        function loadProductDetail() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const productId = parseInt(urlParams.get('id'));
+            
+            if (!productId || !products[productId]) {
+                document.getElementById('product-detail-container').innerHTML = `
+                    <div class="section">
+                        <h2>Товар не найден</h2>
+                        <p>Запрошенный товар не существует или был удален.</p>
+                        <a href="catalog.html" class="btn">Вернуться в каталог</a>
+                    </div>
+                `;
+                return;
+            }
+
+            currentProduct = products[productId];
+            const container = document.getElementById('product-detail-container');
+            
+            container.innerHTML = `
+                <div class="section">
+                    <div class="product-detail">
+                        <div class="product-gallery">
+                            <div class="product-main-image">
+                                <img src="${currentProduct.images[0]}" alt="${currentProduct.name}" id="main-product-image">
+                                <div class="gallery-nav">
+                                    <button onclick="changeProductImage(-1)"><i class="fas fa-chevron-left"></i></button>
+                                    <button onclick="changeProductImage(1)"><i class="fas fa-chevron-right"></i></button>
+                                </div>
+                            </div>
+                            <div class="product-thumbnails" id="product-thumbnails">
+                                ${currentProduct.images.map((img, index) => `
+                                    <div class="thumbnail ${index === 0 ? 'active' : ''}" onclick="setProductImage(${index})">
+                                        <img src="${img}" alt="${currentProduct.name}">
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                        <div class="product-detail-info">
+                            <h1 class="product-detail-title">${currentProduct.name}</h1>
+                            <div class="product-detail-price">${currentProduct.price.toLocaleString()} ₽</div>
+                            <div class="product-description">
+                                <p>${currentProduct.fullDescription}</p>
+                            </div>
+                            <ul class="product-features">
+                                ${currentProduct.features.map(feature => `<li>${feature}</li>`).join('')}
+                            </ul>
+                            <div class="product-actions">
+                                <div class="quantity-selector">
+                                    <button class="quantity-btn" onclick="changeQuantity(-1)">-</button>
+                                    <input type="text" class="quantity-input" value="1" id="product-quantity">
+                                    <button class="quantity-btn" onclick="changeQuantity(1)">+</button>
+                                </div>
+                                <button class="btn" onclick="addToCartWithQuantity()">В корзину</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function changeProductImage(direction) {
+            currentImageIndex += direction;
+            
+            if (currentImageIndex < 0) {
+                currentImageIndex = currentProduct.images.length - 1;
+            } else if (currentImageIndex >= currentProduct.images.length) {
+                currentImageIndex = 0;
+            }
+            
+            document.getElementById('main-product-image').src = currentProduct.images[currentImageIndex];
+            updateThumbnails();
+        }
+
+        function setProductImage(index) {
+            currentImageIndex = index;
+            document.getElementById('main-product-image').src = currentProduct.images[currentImageIndex];
+            updateThumbnails();
+        }
+
+        function updateThumbnails() {
+            const thumbnails = document.querySelectorAll('.thumbnail');
+            
+            thumbnails.forEach((thumb, index) => {
+                if (index === currentImageIndex) {
+                    thumb.classList.add('active');
+                } else {
+                    thumb.classList.remove('active');
+                }
+            });
+        }
+
+        function changeQuantity(delta) {
+            const quantityInput = document.getElementById('product-quantity');
+            let quantity = parseInt(quantityInput.value) || 1;
+            quantity += delta;
+            
+            if (quantity < 1) quantity = 1;
+            
+            quantityInput.value = quantity;
+        }
+
+        function addToCartWithQuantity() {
+            const quantity = parseInt(document.getElementById('product-quantity').value) || 1;
+            
+            // Проверить, есть ли товар уже в корзине
+            const existingItem = cart.find(item => item.id === currentProduct.id);
+            
+            if (existingItem) {
+                existingItem.quantity += quantity;
+            } else {
+                cart.push({
+                    id: currentProduct.id,
+                    name: currentProduct.name,
+                    price: currentProduct.price,
+                    image: currentProduct.images[0],
+                    quantity: quantity
+                });
+            }
+            
+            // Обновить счетчик корзины
+            updateCartCount();
+            
+            // Показать уведомление
+            alert(`Товар "${currentProduct.name}" (${quantity} шт.) добавлен в корзину!`);
+        }
+    </script>
+</body>
+</html>

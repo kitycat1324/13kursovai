@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Магазин бытовой техники "Офелия"</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Шапка сайта -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="index.html" class="logo">ОФЕ<span>ЛИЯ</span></a>
+               
+                <nav>
+                    <ul>
+                        <li><a href="index.html"><i class="fas fa-home"></i> Главная</a></li>
+                        <li><a href="catalog.html"><i class="fas fa-th-list"></i> Каталог</a></li>
+                        <li><a href="services.html"><i class="fas fa-tools"></i> Услуги</a></li>
+                        <li><a href="cart.html" class="cart-icon">
+                            <i class="fas fa-shopping-cart"></i> Корзина <span class="cart-count" id="cartCount">0</span>
+                        </a></li>
+                        <li><a href="profile.html" class="user-icon">
+                            <i class="fas fa-user"></i> Профиль
+                        </a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    
+
+    <!-- Основной контент -->
+    <main class="container">
+        <h1 class="page-title">Добро пожаловать в магазин "Офелия"</h1>
+        
+        <section class="section">
+            <h2 class="section-title">Акции</h2>
+            <div class="products-grid" id="promo-products">
+                <!-- Акционные товары загружаются через JS -->
+            </div>
+        </section>
+        
+        <section class="section">
+            <h2 class="section-title">Контакты</h2>
+            <div class="contact-info">
+                <div class="contact-card">
+                    <h3>Адрес магазина</h3>
+                    <p>Москва, ул. Примерная, д. 10</p>
+                    <p>Режим работы: 9:00-21:00</p>
+                </div>
+                
+                <div class="contact-card">
+                    <h3>Телефоны</h3>
+                    <p>8 (800) 555-35-35 - бесплатно по России</p>
+                    <p>8 (495) 123-45-67 - для Москвы</p>
+                </div>
+                
+                <div class="contact-card">
+                    <h3>Электронная почта</h3>
+                    <p>info@ofelia.ru - общие вопросы</p>
+                    <p>order@ofelia.ru - заказы</p>
+                </div>
+            </div>
+            
+            <div class="map-container">
+                <i class="fas fa-map-marker-alt" style="font-size: 48px; margin-right: 15px;"></i>
+                <div>
+                    <h3>Карта магазинов</h3>
+                    <p>Наши магазины по всей России</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Подвал -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>О магазине</h3>
+                    <ul>
+                        <li><a href="#">О компании</a></li>
+                        <li><a href="#">Наши магазины</a></li>
+                        <li><a href="#">Вакансии</a></li>
+                        <li><a href="#">Отзывы</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Помощь покупателю</h3>
+                    <ul>
+                        <li><a href="#">Доставка и оплата</a></li>
+                        <li><a href="#">Гарантия</a></li>
+                        <li><a href="#">Сервисные центры</a></li>
+                        <li><a href="#">Возврат товара</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Контакты</h3>
+                    <ul>
+                        <li>Телефон: 8 (800) 555-35-35</li>
+                        <li>Email: info@ofelia.ru</li>
+                        <li>Адрес: Москва, ул. Примерная, д. 10</li>
+                        <li>Режим работы: 9:00-21:00</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                &copy; 2025 Магазин бытовой техники "Офелия". Все права защищены.
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/products.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        // Загрузка акционных товаров на главной странице
+        document.addEventListener('DOMContentLoaded', function() {
+            updateCartCount();
+            loadPromoProducts();
+        });
+
+        function loadPromoProducts() {
+            const container = document.getElementById('promo-products');
+            const promoProducts = [products[1], products[2], products[3]]; // Первые три товара как акционные
+            
+            container.innerHTML = promoProducts.map(product => `
+                <div class="product-card" onclick="location.href='product.html?id=${product.id}'">
+                    <div class="product-image">
+                        ${product.id === 3 ? '<div class="sale-badge">-15%</div>' : product.id === 2 ? '<div class="sale-badge">НОВИНКА</div>' : '<div class="sale-badge">-20%</div>'}
+                        <img src="${product.images[0]}" alt="${product.name}">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">${product.name}</h3>
+                        <div class="product-price">${product.price.toLocaleString()} ₽ 
+                            ${product.id === 1 ? '<span style="text-decoration: line-through; color: var(--dark-gray); font-size: 16px; margin-left: 10px;">68 740 ₽</span>' : ''}
+                        </div>
+                        <ul class="product-features">
+                            ${product.features.slice(0, 3).map(feature => `<li>${feature}</li>`).join('')}
+                        </ul>
+                        <button class="btn btn-block" onclick="event.stopPropagation(); addToCart(${product.id})">В корзину</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+        // В раздел <script> главной страницы добавьте:
+function loadPromoProducts() {
+    const container = document.getElementById('promo-products');
+    // Выбираем товары из разных категорий для демонстрации
+    const promoProducts = [
+        products[1],  // Холодильник
+        products[7],  // Телевизор
+        products[10], // Кухонная утварь
+        products[19]  // Прибор для волос
+    ];
+    
+    container.innerHTML = promoProducts.map(product => `
+        <div class="product-card" onclick="location.href='product.html?id=${product.id}'">
+            <div class="product-image">
+                ${getPromoBadge(product)}
+                <img src="${product.images[0]}" alt="${product.name}">
+            </div>
+            <div class="product-info">
+                <h3 class="product-title">${product.name}</h3>
+                <div class="product-price">${product.price.toLocaleString()} ₽</div>
+                <ul class="product-features">
+                    ${product.features.slice(0, 3).map(feature => `<li>${feature}</li>`).join('')}
+                </ul>
+                <button class="btn btn-block" onclick="event.stopPropagation(); addToCart(${product.id})">
+                    <i class="fas fa-shopping-cart"></i> В корзину
+                </button>
+            </div>
+        </div>
+    `).join('');
+}
+
+function getPromoBadge(product) {
+    const badges = {
+        1: '<div class="sale-badge">-20%</div>',
+        7: '<div class="sale-badge">ХИТ</div>',
+        19: '<div class="sale-badge">ПРЕМИУМ</div>'
+    };
+    
+    return badges[product.id] || '<div class="sale-badge">АКЦИЯ</div>';
+}
+
+        
+    </script>
+</body>
+</html>

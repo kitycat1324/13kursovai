@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Профиль - Магазин "Офелия"</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Шапка сайта -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="index.html" class="logo">ОФЕ<span>ЛИЯ</span></a>
+                <nav>
+                    <ul>
+                        <li><a href="index.html"><i class="fas fa-home"></i> Главная</a></li>
+                        <li><a href="catalog.html"><i class="fas fa-th-list"></i> Каталог</a></li>
+                        <li><a href="services.html"><i class="fas fa-tools"></i> Услуги</a></li>
+                        <li><a href="cart.html" class="cart-icon">
+                            <i class="fas fa-shopping-cart"></i> Корзина <span class="cart-count" id="cartCount">0</span>
+                        </a></li>
+                        <li><a href="profile.html" class="user-icon">
+                            <i class="fas fa-user"></i> Профиль
+                        </a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Основной контент -->
+    <main class="container">
+        <h1 class="page-title">Личный кабинет</h1>
+        
+        <div class="section" id="profile-section">
+            <div class="profile-header">
+                <div class="profile-avatar">
+                    <i class="fas fa-user"></i>
+                </div>
+                <div class="profile-info">
+                    <h2 id="user-name">Гость</h2>
+                    <p id="user-email">Войдите в систему</p>
+                </div>
+            </div>
+            
+            <div id="profile-actions">
+                <button class="btn" onclick="showAuthForm('login')">Войти</button>
+                <button class="btn btn-outline" onclick="showAuthForm('register')">Зарегистрироваться</button>
+            </div>
+        </div>
+        
+        <div class="section" id="auth-section" style="display: none;">
+            <div class="form-container">
+                <h2 id="auth-title" class="section-title">Вход в систему</h2>
+                
+                <form id="auth-form">
+                    <div class="form-group" id="name-field" style="display: none;">
+                        <label for="name">Имя</label>
+                        <input type="text" id="name" class="form-control" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" class="form-control" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="password">Пароль</label>
+                        <input type="password" id="password" class="form-control" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-block" id="auth-submit">Войти</button>
+                    </div>
+                </form>
+                
+                <div style="text-align: center;">
+                    <button class="btn btn-outline" onclick="showProfile()">Назад</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="section" id="user-orders" style="display: none;">
+            <h2 class="section-title">История заказов</h2>
+            <p>У вас пока нет заказов.</p>
+        </div>
+    </main>
+
+    <!-- Подвал -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>О магазине</h3>
+                    <ul>
+                        <li><a href="#">О компании</a></li>
+                        <li><a href="#">Наши магазины</a></li>
+                        <li><a href="#">Вакансии</a></li>
+                        <li><a href="#">Отзывы</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Помощь покупателю</h3>
+                    <ul>
+                        <li><a href="#">Доставка и оплата</a></li>
+                        <li><a href="#">Гарантия</a></li>
+                        <li><a href="#">Сервисные центры</a></li>
+                        <li><a href="#">Возврат товара</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Контакты</h3>
+                    <ul>
+                        <li>Телефон: 8 (800) 555-35-35</li>
+                        <li>Email: info@ofelia.ru</li>
+                        <li>Адрес: Москва, ул. Примерная, д. 10</li>
+                        <li>Режим работы: 9:00-21:00</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                &copy; 2025 Магазин бытовой техники "Офелия". Все права защищены.
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script src="js/auth.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            updateCartCount();
+            updateProfileDisplay();
+        });
+
+        function updateProfileDisplay() {
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+            const profileSection = document.getElementById('profile-section');
+            const authSection = document.getElementById('auth-section');
+            const userOrders = document.getElementById('user-orders');
+            const profileActions = document.getElementById('profile-actions');
+            const userName = document.getElementById('user-name');
+            const userEmail = document.getElementById('user-email');
+            
+            if (currentUser) {
+                userName.textContent = currentUser.name;
+                userEmail.textContent = currentUser.email;
+                profileActions.innerHTML = `
+                    <button class="btn" onclick="logout()">Выйти</button>
+                `;
+                userOrders.style.display = 'block';
+            } else {
+                userName.textContent = 'Гость';
+                userEmail.textContent = 'Войдите в систему';
+                profileActions.innerHTML = `
+                    <button class="btn" onclick="showAuthForm('login')">Войти</button>
+                    <button class="btn btn-outline" onclick="showAuthForm('register')">Зарегистрироваться</button>
+                `;
+                userOrders.style.display = 'none';
+            }
+            
+            profileSection.style.display = 'block';
+            authSection.style.display = 'none';
+        }
+
+        function showAuthForm(type) {
+            const profileSection = document.getElementById('profile-section');
+            const authSection = document.getElementById('auth-section');
+            const authTitle = document.getElementById('auth-title');
+            const nameField = document.getElementById('name-field');
+            const authSubmit = document.getElementById('auth-submit');
+            const authForm = document.getElementById('auth-form');
+            
+            profileSection.style.display = 'none';
+            authSection.style.display = 'block';
+            
+            if (type === 'login') {
+                authTitle.textContent = 'Вход в систему';
+                nameField.style.display = 'none';
+                authSubmit.textContent = 'Войти';
+            } else {
+                authTitle.textContent = 'Регистрация';
+                nameField.style.display = 'block';
+                authSubmit.textContent = 'Зарегистрироваться';
+            }
+            
+            // Очистить форму
+            authForm.reset();
+        }
+
+        function showProfile() {
+            const profileSection = document.getElementById('profile-section');
+            const authSection = document.getElementById('auth-section');
+            
+            profileSection.style.display = 'block';
+            authSection.style.display = 'none';
+        }
+
+        // Обработка формы авторизации/регистрации
+        document.getElementById('auth-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const authSubmit = document.getElementById('auth-submit');
+            
+            if (authSubmit.textContent === 'Войти') {
+                // Вход в систему
+                if (email && password) {
+                    const currentUser = {
+                        name: 'Пользователь',
+                        email: email,
+                        registrationDate: new Date().toISOString()
+                    };
+                    localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                    updateProfileDisplay();
+                    alert('Вы успешно вошли в систему!');
+                } else {
+                    alert('Пожалуйста, заполните все поля!');
+                }
+            } else {
+                // Регистрация
+                if (name && email && password) {
+                    const currentUser = {
+                        name: name,
+                        email: email,
+                        registrationDate: new Date().toISOString()
+                    };
+                    localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                    updateProfileDisplay();
+                    alert('Вы успешно зарегистрировались!');
+                } else {
+                    alert('Пожалуйста, заполните все поля!');
+                }
+            }
+        });
+
+        function logout() {
+            localStorage.removeItem('currentUser');
+            updateProfileDisplay();
+            alert('Вы вышли из системы!');
+        }
+    </script>
+</body>
+</html>

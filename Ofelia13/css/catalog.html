@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Каталог товаров - Магазин "Офелия"</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/style.css">
+    
+    <style>
+        .catalog-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .category-filter {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .category-btn {
+            padding: 10px 20px;
+            background-color: var(--light-green);
+            border: 2px solid transparent;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+
+        .category-btn:hover {
+            background-color: var(--primary-green);
+            color: var(--white);
+        }
+
+        .category-btn.active {
+            background-color: var(--primary-green);
+            color: var(--white);
+            border-color: var(--dark-green);
+        }
+
+        .sort-controls {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .sort-select {
+            padding: 10px 15px;
+            border: 2px solid var(--light-green);
+            border-radius: 8px;
+            background-color: var(--white);
+            font-size: 14px;
+            cursor: pointer;
+            transition: border-color 0.3s;
+        }
+
+        .sort-select:focus {
+            border-color: var(--primary-green);
+            outline: none;
+        }
+
+        .products-count {
+            color: var(--dark-gray);
+            font-size: 14px;
+        }
+
+        .no-products {
+            text-align: center;
+            padding: 40px;
+            color: var(--dark-gray);
+        }
+
+        .no-products i {
+            font-size: 48px;
+            margin-bottom: 20px;
+            color: var(--light-green);
+        }
+
+        @media (max-width: 768px) {
+            .catalog-controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .category-filter {
+                justify-content: center;
+            }
+
+            .sort-controls {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Шапка сайта -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="index.html" class="logo">ОФЕ<span>ЛИЯ</span></a>
+                <nav>
+                    <ul>
+                        <li><a href="index.html"><i class="fas fa-home"></i> Главная</a></li>
+                        <li><a href="catalog.html"><i class="fas fa-th-list"></i> Каталог</a></li>
+                        <li><a href="services.html"><i class="fas fa-tools"></i> Услуги</a></li>
+                        <li><a href="cart.html" class="cart-icon">
+                            <i class="fas fa-shopping-cart"></i> Корзина <span class="cart-count" id="cartCount">0</span>
+                        </a></li>
+                        <li><a href="profile.html" class="user-icon">
+                            <i class="fas fa-user"></i> Профиль
+                        </a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Основной контент -->
+    <main class="container">
+        <h1 class="page-title">Каталог товаров</h1>
+        
+        <!-- Панель управления каталогом -->
+        <div class="section">
+            <div class="catalog-controls">
+                <div class="category-filter" id="category-filter">
+                    <!-- Кнопки категорий будут добавлены через JS -->
+                </div>
+                
+                <div class="sort-controls">
+                    <span class="products-count" id="products-count">Все товары: 24</span>
+                    <select class="sort-select" id="sort-select">
+                        <option value="default">По умолчанию</option>
+                        <option value="price-asc">По возрастанию цены</option>
+                        <option value="price-desc">По убыванию цены</option>
+                        <option value="name-asc">По названию (А-Я)</option>
+                        <option value="name-desc">По названию (Я-А)</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="products-grid" id="products-grid">
+                <!-- Товары будут загружены через JS -->
+            </div>
+        </div>
+    </main>
+
+    <!-- Подвал -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>О магазине</h3>
+                    <ul>
+                        <li><a href="index.html">О компании</a></li>
+                        <li><a href="#section-title">Наши магазины</a></li>
+                        <li><a href="#">Вакансии</a></li>
+                        <li><a href="#">Отзывы</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Помощь покупателю</h3>
+                    <ul>
+                        <li><a href="services.html">Доставка и оплата</a></li>
+                        <li><a href="services.html">Гарантия</a></li>
+                        <li><a href="services.html">Сервисные центры</a></li>
+                        <li><a href="services.html">Возврат товара</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Контакты</h3>
+                    <ul>
+                        <li>Телефон: 8 (800) 555-35-35</li>
+                        <li>Email: info@ofelia.ru</li>
+                        <li>Адрес: Москва, ул. Примерная, д. 10</li>
+                        <li>Режим работы: 9:00-21:00</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                &copy; 2025 Магазин бытовой техники "Офелия". Все права защищены.
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/products.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        let currentCategory = 'all';
+        let currentSort = 'default';
+        let filteredProducts = [];
+
+        document.addEventListener('DOMContentLoaded', function() {
+            updateCartCount();
+            initCatalog();
+        });
+
+        function initCatalog() {
+            createCategoryFilter();
+            loadProducts();
+            setupEventListeners();
+        }
+
+        function createCategoryFilter() {
+            const filterContainer = document.getElementById('category-filter');
+            
+            // Кнопка "Все товары"
+            filterContainer.innerHTML = `
+                <button class="category-btn active" data-category="all">
+                    <i class="fas fa-th-large"></i> Все товары
+                </button>
+            `;
+            
+            // Кнопки для каждой категории
+            for (const [key, value] of Object.entries(categories)) {
+                filterContainer.innerHTML += `
+                    <button class="category-btn" data-category="${key}">
+                        <i class="fas ${getCategoryIcon(key)}"></i> ${value}
+                    </button>
+                `;
+            }
+        }
+
+        function getCategoryIcon(category) {
+            const icons = {
+                'refrigerators': 'fa-snowflake',
+                'washing-machines': 'fa-tshirt',
+                'tvs': 'fa-tv',
+                'kitchen-utensils': 'fa-blender',
+                'sinks': 'fa-faucet',
+                'faucets': 'fa-tint',
+                'hair-care': 'fa-user',
+                'antennas': 'fa-satellite-dish'
+            };
+            return icons[category] || 'fa-box';
+        }
+
+        function setupEventListeners() {
+            // Обработчики для кнопок категорий
+            document.querySelectorAll('.category-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const category = this.dataset.category;
+                    setActiveCategory(category);
+                });
+            });
+
+            // Обработчик для сортировки
+            document.getElementById('sort-select').addEventListener('change', function() {
+                currentSort = this.value;
+                applyFilters();
+            });
+        }
+
+        function setActiveCategory(category) {
+            currentCategory = category;
+            
+            // Обновить активную кнопку
+            document.querySelectorAll('.category-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.querySelector(`[data-category="${category}"]`).classList.add('active');
+            
+            applyFilters();
+        }
+
+        function loadProducts() {
+            // Преобразуем объект products в массив
+            filteredProducts = Object.values(products);
+            renderProducts();
+        }
+
+        function applyFilters() {
+            // Фильтрация по категории
+            if (currentCategory === 'all') {
+                filteredProducts = Object.values(products);
+            } else {
+                filteredProducts = Object.values(products).filter(
+                    product => product.category === currentCategory
+                );
+            }
+
+            // Сортировка
+            filteredProducts = sortProducts(filteredProducts, currentSort);
+            
+            renderProducts();
+        }
+
+        function sortProducts(productsArray, sortType) {
+            const sorted = [...productsArray];
+            
+            switch (sortType) {
+                case 'price-asc':
+                    return sorted.sort((a, b) => a.price - b.price);
+                case 'price-desc':
+                    return sorted.sort((a, b) => b.price - a.price);
+                case 'name-asc':
+                    return sorted.sort((a, b) => a.name.localeCompare(b.name));
+                case 'name-desc':
+                    return sorted.sort((a, b) => b.name.localeCompare(a.name));
+                default:
+                    return sorted.sort((a, b) => a.id - b.id);
+            }
+        }
+
+        function renderProducts() {
+            const container = document.getElementById('products-grid');
+            const countElement = document.getElementById('products-count');
+            
+            // Обновить счетчик товаров
+            const categoryName = currentCategory === 'all' ? 'Все товары' : categories[currentCategory];
+            countElement.textContent = `${categoryName}: ${filteredProducts.length}`;
+            
+            if (filteredProducts.length === 0) {
+                container.innerHTML = `
+                    <div class="no-products">
+                        <i class="fas fa-search"></i>
+                        <h3>Товары не найдены</h3>
+                        <p>Попробуйте выбрать другую категорию или изменить параметры фильтрации</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            container.innerHTML = filteredProducts.map(product => `
+                <div class="product-card" onclick="location.href='product.html?id=${product.id}'">
+                    <div class="product-image">
+                        ${getProductBadge(product)}
+                        <img src="${product.images[0]}" alt="${product.name}">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">${product.name}</h3>
+                        <div class="product-price">${product.price.toLocaleString()} ₽</div>
+                        <ul class="product-features">
+                            ${product.features.slice(0, 3).map(feature => `<li>${feature}</li>`).join('')}
+                        </ul>
+                        <button class="btn btn-block" onclick="event.stopPropagation(); addToCart(${product.id})">
+                            <i class="fas fa-shopping-cart"></i> В корзину
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function getProductBadge(product) {
+            // Добавляем акционные метки для некоторых товаров
+            const badges = {
+                1: '<div class="sale-badge">-20%</div>',
+                3: '<div class="sale-badge">-15%</div>',
+                5: '<div class="sale-badge">НОВИНКА</div>',
+                7: '<div class="sale-badge">ХИТ</div>',
+                19: '<div class="sale-badge">ПРЕМИУМ</div>'
+            };
+            
+            return badges[product.id] || '';
+        }
+    </script>
+</body>
+</html>
